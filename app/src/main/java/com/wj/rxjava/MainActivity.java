@@ -11,6 +11,8 @@ import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -64,11 +66,38 @@ public class MainActivity extends AppCompatActivity {
     //  }
     //});
 
+    //可将参数类型省略
     btn.setOnClickListener((view) -> {
-      Log.e("Button", "button click lambda:" + view.getTag());
+      Log.e("Lambda Button", "button click lambda:" + view.getTag());
     });
-    et.setOnFocusChangeListener((view, b) -> {
-      Log.e("EditText", "focus:" + b);
+    //可保留参数类型
+    et.setOnFocusChangeListener((View view, boolean b) -> {
+      Log.e("Lambda EditText", "focus:" + b);
+    });
+    Thread thread = new Thread(new Runnable() {
+      @Override
+      public void run() {
+        Log.e("normal Thread", "00000000");
+      }
+    });
+    thread.start();
+
+    Thread thread1 = new Thread(() -> {
+      Log.e("Lambda Thread", "111111111");
+    });
+    thread1.start();
+
+    List<String> list = new ArrayList<>();
+    list.add("a");
+    list.add("b");
+    list.add("c");
+    list.add("d");
+    list.add("e");
+    for (String s : list) {
+      Log.e("normal List", "输出：" + s);
+    }
+    list.forEach(s->{
+      Log.e("lambda List", "输出：" + s);
     });
   }
 
